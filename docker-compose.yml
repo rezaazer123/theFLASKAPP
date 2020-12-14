@@ -1,0 +1,28 @@
+version: "3"
+services:
+  
+  db:
+    container_name: postgres
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=db
+      - USE_POSTGRES=True
+    ports:
+      - "5432:5432"
+
+  flaskapp:
+    container_name: flaskapp
+    build: .
+    image: flask-pw9
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=db
+      - USE_POSTGRES=True
+    depends_on:
+      - db
